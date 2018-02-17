@@ -41,6 +41,32 @@ export default class Iphone extends Component {
 		// check if temperature data is fetched, if so add the sign styling to the page
 		const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
 		
+		
+		// The below section sets up a listener on the text input and the search button, takes that data
+		// and sends an API call to poscodes.io, parses the response data and puts the relevant data into variables.
+		// This is all done on the client side. 
+
+		var postcode = ""
+
+		$( document.getElementById('searchButton') ).click(function() {
+		 postcode = document.getElementById('searchField').value;
+		 console.log(postcode);
+
+		var url = "https://api.postcodes.io/postcodes/" + postcode;
+
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", url, false);
+		xhr.send();
+		console.log(xhr.responseText);
+
+		var JSONresponse = JSON.parse(xhr.responseText);
+
+		var lon = JSONresponse['result']['longitude'];
+		var lat = JSONresponse['result']['latitude'];
+
+
+		});
+		
 		// topnav element links to an external stylesheet 'font awesome' that includes icons
 		// allows icon for any element to be set with the following syntax: <i class ="fa fa-ICONNAME"></i>
 		return (
